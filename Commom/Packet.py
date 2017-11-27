@@ -31,7 +31,7 @@ class IPV4:
         self.total_length = 20
         self.identification = 0
         self.flags_fragment_offset = 0
-        self.ttl = 64
+        self.ttl = 1
         self.protocol = 89  # ospf fixed
         self.checksum = 0
         self.src_addr = None

@@ -26,22 +26,25 @@ class PacketBuilder:
         self.p.ospf.type = 1
         hello = OSPF_Hello()
         hello.net_mask = to_net_addr(NET_MASK)
-        hello.backup_router = 0
+        hello.backup_router = BACKUP_ROUTER
         hello.designated_router = DST_ROUTER_ID
         hello.dead_interval = DEAD_INTERVAL
         hello.hello_interval = HELLO_INTERVAL
         hello.router_priority = 0
-        hello.options = 0
+        hello.options = 2
         hello.neighbor.append(DST_ROUTER_ID)
         self.p.msg = hello
 
-    def build_DBD(self, sequence, initial=False):
+    def build_DBD(self, sequence, initial=False, more = False):
         self.p.ospf.type = 2
         dbd = OSPF_DBD()
         dbd.sequence = sequence
         dbd.flags = 1
         if initial:
             dbd.flags += 0b100
+        if more:
+            dbd.flags += 0b10
+        dbd.options = 2
         self.p.msg = dbd
 
     def buid_Length(self):
